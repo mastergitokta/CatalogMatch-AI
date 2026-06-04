@@ -6,7 +6,7 @@
 .DS_Store
 Thumbs.db
 
-.env
+# .env
 .env.backup
 .env.production
 
