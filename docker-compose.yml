@@ -32,7 +32,7 @@ services:
     restart: unless-stopped
 
   mysql:
-    image: mysql:8.0
+    image: mysql:8.0-debian
     container_name: catalogmatch-mysql
     ports:
       - "${DB_PORT:-3307}:3306"
