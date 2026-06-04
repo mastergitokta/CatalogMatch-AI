@@ -9,6 +9,7 @@ RUN composer install \
     --prefer-dist \
     --no-interaction \
     --no-progress \
+    --no-scripts \
     --optimize-autoloader
 
 FROM php:8.3-apache
@@ -40,6 +41,7 @@ COPY --from=vendor /app/vendor ./vendor
 COPY . .
 
 RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
+    && php artisan package:discover --ansi \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R ug+rwx storage bootstrap/cache
 
