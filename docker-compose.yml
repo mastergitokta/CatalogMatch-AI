@@ -38,13 +38,13 @@ services:
       - "${DB_PORT:-3307}:3306"
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${MYSQL_APP_USER:-catalogmatch}
-      MYSQL_PASSWORD: ${MYSQL_APP_PASSWORD:-catalogmatch}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_APP_USER:-${DB_USERNAME}}
+      MYSQL_PASSWORD: ${MYSQL_APP_PASSWORD:-${DB_PASSWORD}}
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${DB_PASSWORD}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 10
