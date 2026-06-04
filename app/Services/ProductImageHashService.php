@@ -50,7 +50,16 @@ class ProductImageHashService
             return null;
         }
 
-        return Hash::fromHex(strtolower($firstHash))
-            ->distance(Hash::fromHex(strtolower($secondHash)));
+        return Hash::fromBits($this->hexToBits($firstHash))
+            ->distance(Hash::fromBits($this->hexToBits($secondHash)));
+    }
+
+    private function hexToBits(string $hex): string
+    {
+        $hex = strtolower(trim($hex));
+
+        return collect(str_split($hex))
+            ->map(fn (string $character): string => str_pad(base_convert($character, 16, 2), 4, '0', STR_PAD_LEFT))
+            ->implode('');
     }
 }
